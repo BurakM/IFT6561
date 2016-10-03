@@ -28,20 +28,20 @@ public class Simulator {
 		double S = this.s0;
 		double Y = 0;
 		double previousDelta;
-		
 
 		Option option = new Option(this.s0, this.sigma, this.T, this.K, this.r);
 		previousDelta = option.Delta(); 
+		
+		// TO CHECK THIS MOTHERFUCKING PIECE OF SHIT
+		Y = -previousDelta*S+option.Price();
 		
 		for (int j = 1; j < this.d; j++){
 			
 			t = t + this.T/this.d;
 			B = B + Math.pow(this.T/this.d,0.5)*normalGen.nextDouble();
-			S = this.s0*Math.exp((this.r-Math.pow(this.sigma,2)/2)*t+this.sigma*B);
-			
+			S = this.s0*Math.exp((this.r-Math.pow(this.sigma,2)/2)*t+this.sigma*B);	
 			option.Update(S, this.T-t);
 			Y = Math.exp(this.r*this.T/this.d)*Y-(option.Delta()-previousDelta)*S;
-			
 			previousDelta = option.Delta();
 		}
 

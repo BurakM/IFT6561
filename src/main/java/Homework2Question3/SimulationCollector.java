@@ -41,9 +41,9 @@ public class SimulationCollector {
 	        points[1][i] = simulation.finalPortValue;
 	    }
 	   
-	    ScatterChart chart = new ScatterChart("Scatter Plot - Portfolio vs. Option with " + Integer.toString(this.d) + " redhedges", "Option Value at time T", "Portfolio Value at time T", points);
+	    ScatterChart chart = new ScatterChart("Scatter Plot - Portfolio vs. Option with " + Integer.toString(this.d) + " hedge periods", "Option Value at time T", "Portfolio Value at time T", points);
 	    chart.view(1200, 800);
-	    HistogramChart hist = new HistogramChart("Histogram Option minus Portfolio " + Integer.toString(this.d) + " redhedges","Option minus Portfolio", "Occurences" , tallhist);
+	    HistogramChart hist = new HistogramChart("Histogram Option minus Portfolio " + Integer.toString(this.d) + " hedge periods","Option minus Portfolio", "Occurences" , tallhist);
 	    hist.view(1200, 800);
 	}
 
