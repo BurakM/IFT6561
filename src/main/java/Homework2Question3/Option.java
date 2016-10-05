@@ -2,6 +2,8 @@ package Homework2Question3;
 
 import umontreal.ssj.probdist.NormalDist;
 
+// This class stores methods/variables of option
+
 public class Option {
 	double s;
 	double sigma;
@@ -9,7 +11,7 @@ public class Option {
 	double K;
 	double r;
 	
-
+	// Constructor class
 	public Option(double s, double sigma, double T, double K, double r){
 		this.s = s;
 		this.sigma = sigma;
@@ -18,6 +20,7 @@ public class Option {
 		this.r = r;
 	}
 	
+	// Pricing method
 	public double Price(){
 		double z0= (Math.log(this.K/this.s)-(this.r-Math.pow(this.sigma, 2)/2)*this.T)/(this.sigma*Math.pow(this.T, 0.5));
 		NormalDist distNormal = new NormalDist();
@@ -25,6 +28,7 @@ public class Option {
 		return price;
 	}
 	
+	// Delta of option method
 	public double Delta(){
 		double z0= (Math.log(this.K/this.s)-(this.r-Math.pow(this.sigma, 2)/2)*this.T)/(this.sigma*Math.pow(this.T, 0.5));
 		NormalDist distNormal = new NormalDist();
@@ -32,6 +36,7 @@ public class Option {
 		return delta;
 	}
 	
+	// Update time to expiry and spot price.
 	public void Update(double s, double T){
 		this.T = T; 
 		this.s = s;
