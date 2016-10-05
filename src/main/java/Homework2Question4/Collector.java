@@ -28,7 +28,7 @@ public class Collector {
 		AsianOptionDelta = new Asian(r, sigma, strike, s0 + delta, s, zeta);
 	}
 	
-	// Independant random number
+	// Ind. random number
 	public void IRN (int n) {
 		double AsianOptionPayoff;
 		double AsianOptionDeltaPayoff;

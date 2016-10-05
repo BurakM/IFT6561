@@ -1,5 +1,6 @@
 package Homework2Question4;
 
+// Question 4, homework 2
 
 public class Main {
 	public static void main (String[] args) {
@@ -15,6 +16,7 @@ public class Main {
 	    
 	    // Size of step for numerical differentiation
 		double delta = 0.01	;
+		
 		// Number of runs
 		int runs = 10000;
 		

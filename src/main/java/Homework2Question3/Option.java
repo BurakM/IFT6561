@@ -5,13 +5,14 @@ import umontreal.ssj.probdist.NormalDist;
 // This class stores methods/variables of option
 
 public class Option {
+	// Parameters of option
 	double s;
 	double sigma;
 	double T; // This is the time remaining
 	double K;
 	double r;
 	
-	// Constructor class
+	// Constructor method
 	public Option(double s, double sigma, double T, double K, double r){
 		this.s = s;
 		this.sigma = sigma;

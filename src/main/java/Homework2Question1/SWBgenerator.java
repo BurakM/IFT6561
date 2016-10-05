@@ -3,6 +3,8 @@ package Homework2Question1;
 import umontreal.ssj.rng.RandomStreamBase;
 
 // Uses base code from example
+// Very little change from the base code
+
 public class SWBgenerator extends RandomStreamBase {
    private final int r = 8;
    private final int s = 48;

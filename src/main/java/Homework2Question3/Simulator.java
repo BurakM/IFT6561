@@ -5,16 +5,19 @@ import umontreal.ssj.randvar.NormalGen;
 // Dirty work done in this class
 
 public class Simulator {
+	// Parameters of option
 	double s0;
 	double sigma;
 	double T;
 	double K;
 	double r;
 	int d;
+	
+	// Value of options and portfolio at time = T
 	double finalOptionValue;
 	double finalPortValue;
 	
-	// Constructor
+	// Constructor methods
 	public Simulator(double s, double sigma, double T, double K, double r, int d){
 		this.s0 = s;
 		this.sigma = sigma;

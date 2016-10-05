@@ -17,6 +17,7 @@ public class Asian {
    double[] logS;    // Log of the GBM process: logS[t] = log (S[t]).
    // Array zeta[0..s] must contain zeta[0]=0.0, plus the s observation times.
    
+   // Constructor method
    public Asian (double r, double sigma, double strike,
                  double s0, int s, double[] zeta) {
       this.strike = strike;
@@ -35,12 +36,14 @@ public class Asian {
       }
       logS[0] = Math.log (s0);
    }
+   
    // Generates the process S.
    public void generatePath (RandomStream stream) {
        for (int j = 0; j < s; j++)
           logS[j+1] = logS[j] + muDelta[j] + sigmaSqrtDelta[j]
                    * NormalDist.inverseF01 (stream.nextDouble());
    }
+   
    // Computes and returns the discounted option payoff.
    public double getPayoff () {
        double average = 0.0;  // Average of the GBM process.
@@ -51,6 +54,7 @@ public class Asian {
    }
    
    // Modified payoff function used to calculate stochastic derivative
+   // see pdf for explanations of its use
    public double getPayoffSto () {
 	   double average = 0.0;  // Average of the GBM process.
 	   for (int j = 1; j <= s; j++) average += Math.exp (logS[j]);

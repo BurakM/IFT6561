@@ -2,8 +2,7 @@ package Homework2Question3;
 
 import umontreal.ssj.stat.Tally;
 
-// Question number 3 from the second assignment. 
-// Code executed from this file
+// Question number 3 from the homework 2
 
 public class Main {
 	public static void main(String[] args) {
@@ -22,22 +21,19 @@ public class Main {
 	    Tally stats2 = new Tally ("Statistics on hedge, weekly");
 	    Tally stats3 = new Tally ("Statistics on hedge, daily");
 	    
-	    
 	    // Monthly hedging
 	    d = 12;
 	    System.out.println ("Montly hedging");
 	    SimulationCollector simcollect = new SimulationCollector(S, sigma, T, K, r, d, runs, stats);
 	    simcollect.RunSimulations();
 	    System.out.println (stats.report (0.95, 3));
-	    
-	    
+	    	    
 	    // Weekly hedging
 	    d = 52;
 	    System.out.println ("Weekly hedging");
 	    SimulationCollector simcollect2 = new SimulationCollector(S, sigma, T, K, r, d, runs, stats2);
 	    simcollect2.RunSimulations();
 	    System.out.println (stats2.report (0.95, 3));
-	    
 	    
 	    // Daily hedging
 	    d = 250;
