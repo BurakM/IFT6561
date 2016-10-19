@@ -4,6 +4,7 @@ import umontreal.ssj.probdist.NormalDist;
 import umontreal.ssj.randvar.NormalGen;
 import umontreal.ssj.rng.RandomStream;
 
+// Copula class
 public class Copula {
 	double p;
 	double py;
@@ -13,6 +14,7 @@ public class Copula {
 	NormalDist distNormal = new NormalDist();
 	NormalGen genNormal;
 	
+	// Input desired correlation, and random stream
 	Copula(double rhos, RandomStream stream){
 		this.p = (rhos + 1)/2;
 		this.py = 2*Math.sin(rhos*Math.PI/6);
@@ -20,6 +22,7 @@ public class Copula {
 		this.genNormal = new NormalGen(stream);
 	}
 	
+	// NORTA method number generation
 	public void NORTA(){
 		double z1 = this.genNormal.nextDouble();
 		double z2 = this.genNormal.nextDouble();
@@ -31,6 +34,7 @@ public class Copula {
 		this.u2 = distNormal.cdf(y2);
 	} 
 	
+	// Frechet method number generation
 	public void Frechet(){
 		this.u1 = this.stream.nextDouble();
 		double testP = this.stream.nextDouble();
