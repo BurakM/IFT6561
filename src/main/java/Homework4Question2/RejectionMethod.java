@@ -19,7 +19,9 @@ public class RejectionMethod {
 	public double[] QuestionD(){
 		double x, y, z;
 		NormalDist dist = new NormalDist();
+		int i = 0;
 		while(true){
+			i++;
 			x = this.a*stream.nextDouble();
 			y = this.b*stream.nextDouble();
 			z = this.c*stream.nextDouble();
@@ -27,16 +29,19 @@ public class RejectionMethod {
 				break;
 			}
 		}
-		double[] vec = new double[2];
+		double[] vec = new double[3];
 		vec[0] = x;
 		vec[1] = y;
+		vec[2] = i;
 		return (vec);
 	}
 	
 	public double[] QuestionE(){
 		double x, y, z;
 		NormalDist dist = new NormalDist();
+		int i = 1;
 		while(true){
+			i++;
 			x = this.a*stream.nextDouble();
 			y = this.b*stream.nextDouble();
 			if(Math.pow(x, 2)+Math.pow(y, 2) > this.r){
@@ -49,25 +54,29 @@ public class RejectionMethod {
 				break;
 			}
 		}
-		double[] vec = new double[2];
+		double[] vec = new double[3];
 		vec[0] = x;
 		vec[1] = y;
+		vec[2] = i;
 		return (vec);
 	}
 	
 	public double[] QuestionG(){
 		double x, y;
 		NormalDist dist = new NormalDist();
+		int i = 1;
 		while(true){
+			i++;
 			x = dist.inverseF(0.5+0.5*stream.nextDouble());
 			y = dist.inverseF(0.5+0.5*stream.nextDouble());
 			if (x<=a && y<=b){	
 				break;
 			}
 		}
-		double[] vec = new double[2];
+		double[] vec = new double[3];
 		vec[0] = x;
 		vec[1] = y;
+		vec[2] = i;
 		return (vec);
 	}
 }
