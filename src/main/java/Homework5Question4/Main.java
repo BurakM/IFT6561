@@ -63,5 +63,15 @@ public class Main {
 			AsianOption option3 = new AsianOption(s0, r, sigma, T, numSimulations, stream, d3, time3, K[i], true);
 			System.out.println("With time step 3, K = " + K[i] + ", MC estimation with method 5 = " + option3.Stats4.average() + ", Variance = " + option3.Stats4.variance() + ", Reduction of:" + option3_base.Stats1.variance()/option3.Stats4.variance());
 		}
+		
+		// Question b)
+		for(int i = 0; i<4; i++){
+			AsianOption option1 = new AsianOption(s0, r, sigma, T, numSimulations, stream, d1, time1, K[i], false);
+			System.out.println("With time step 1, K = " + K[i] + "Variance  reduction with factor= " + option1.Stats1.variance()*sigma*sigma*(time1[d1]-time1[0])/(option1.Stats2.variance()));
+			AsianOption option2 = new AsianOption(s0, r, sigma, T, numSimulations, stream, d2, time2, K[i], false);
+			System.out.println("With time step 2, K = " + K[i] + "Variance  reduction with factor= " + option2.Stats1.variance()*sigma*sigma*(time2[d2]-time1[0])/(option2.Stats2.variance()));
+			AsianOption option3 = new AsianOption(s0, r, sigma, T, numSimulations, stream, d3, time3, K[i], false);
+			System.out.println("With time step 3, K = " + K[i] + "Variance  reduction with factor= " + option3.Stats1.variance()*sigma*sigma*(time3[d3]-time1[0])/(option3.Stats2.variance()));
+		}
 	}
 }

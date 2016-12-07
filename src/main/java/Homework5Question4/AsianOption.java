@@ -22,7 +22,7 @@ public class AsianOption {
 		
 		// Initialize all variables
 		double varA, varSum, varG, covASum, covAG, covGSum, controlVariable1, controlVariable2, beta, 
-		B, B2, S, S2, sum, sum2, mult, mult2, meanArithmetic, my, sy2, tempCV2, temp1CV1, temp2CV2;
+		B, B2, S, S2, sum, sum2, mult, mult2, meanArithmetic, my, sy2, tempCV2, temp1CV1, temp2CV2, u;
 		
 		// Initialize all variables to their initial values
 		varA = varSum = varG = covASum = covAG = covGSum = meanArithmetic = tempCV2 = temp1CV1 = temp2CV2 = 0;
@@ -41,6 +41,7 @@ public class AsianOption {
 			// We iterate through the time vector
 			for (int i=1; i<=iter;i++){
 				
+				u = stream.nextDouble();
 				// Calculate brownian motion, and underlying price
 				B = B + NormalDist.inverseF01(stream.nextDouble())*Math.sqrt(time[i]-time[i-1]);
 				S = s0*Math.exp((r-sigma*sigma/2.0)*(time[i])+sigma*B);
@@ -49,25 +50,25 @@ public class AsianOption {
 				
 				// We use this in the case of antithetic variate
 				if(method5 == true){
-					B2=B2+Math.sqrt(time[i]-time[i-1])*NormalDist.inverseF01(1-stream.nextDouble());
+					B2=B2+Math.sqrt(time[i]-time[i-1])*NormalDist.inverseF01(1-u);
 					S2=s0*Math.exp((r-sigma*sigma/2.0)*(time[i])+sigma*B2);	
 					sum2=sum2+S2;
 					mult2=mult2*S2;	
 				}
 			}
 	
-			// If antithetic variate
+			// If method 1 to 4
 			if(method5 == false){
 				Geometric[j-1]=Math.max(0, Math.exp(-r*T)*(Math.pow(mult,1.0/iter)-K));
 				Arith[j-1]=Math.max(0, Math.exp(-r*T)*(sum/iter-K));
 				Sum[j-1]=sum;
-					
 			}
-			// Otherwise do as normal
+			
+			// Method 5
 			else{
-				Geometric[j-1]=(Math.max(0, Math.exp(-r*T)*(Math.pow(mult,1.0/iter)-K))+Math.max(0, Math.exp(-r*T)*(Math.pow(mult2,(1.0/iter))-K)))/2.0;
-				Arith[j-1]=(Math.max(0, Math.exp(-r*T)*(sum/iter-K))+Math.max(0, Math.exp(-r*T)*(sum2/iter-K)))/2.0;
-				Sum[j-1]=(sum+sum2)/2.0;
+				Geometric[j-1] = (Math.max(0, Math.exp(-r*T)*(Math.pow(mult,1.0/iter)-K))+Math.max(0, Math.exp(-r*T)*(Math.pow(mult2,(1.0/iter))-K)))/2.0;
+				Arith[j-1] = (Math.max(0, Math.exp(-r*T)*(sum/iter-K))+Math.max(0, Math.exp(-r*T)*(sum2/iter-K)))/2.0;
+				Sum[j-1] = (sum+sum2)/2.0;
 			}
 	
 			meanArithmetic = meanArithmetic+(Arith[j-1])/(double)numSimulations;	
