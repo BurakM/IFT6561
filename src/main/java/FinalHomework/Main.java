@@ -64,18 +64,24 @@ public class Main {
 		// Question b)
 		
 		// All gamma = 0.1
-		int a1[] = {1, 6229, 2691, 1399, 7751, 2865, 3221, 379, 
-				2211, 1593, 4075, 2911, 3051, 7907, 2063, 2753, 
-				5017, 5245, 7015, 5735, 6687, 2479, 3451, 5301, 
-				2095, 5207, 4357, 4651, 5859, 2299, 3151, 2955};
+		int a1[] = {1, 19463, 17213, 5895, 14865, 31925, 30921, 
+				26671, 1607, 32473, 27933, 25385, 4363, 27011, 
+				29035, 16205, 6221, 1115, 18943, 31313, 13799, 
+				17899, 6459, 5551, 22361, 31751, 27107, 3485, 
+				5281, 31151, 9189, 23493};
 		
 		// gamma = 1/(1+j)
-		int a2[] = {1, 6229, 2691, 4415, 1507, 6655, 5877, 2887, 
-				3647, 4789, 6315, 2089, 3473, 7985, 4009, 8087, 
-				6899, 1395, 3203, 5539, 5485, 3127, 2641, 6129, 
-				5219, 2363, 7781, 31, 903, 145, 2807, 1955};
+		int a2[] = {1, 19463, 8279, 31243, 6281, 26417, 28747, 
+				10089, 8703, 14147, 10481, 29905, 1371, 23299, 
+				26523, 7633, 10011, 11559, 17787, 4237, 19047, 
+				9425, 16707, 26967, 9301, 15489, 25959, 4345, 
+				14105, 25341, 22523, 5787};
+		
+		
 		
 		/*
+		n = 16;
+		
 		for (int j = 1; j<4; j++){
 			System.out.println("Method " + j);
 				
@@ -101,33 +107,149 @@ public class Main {
 			System.out.println("Variance reduction, lattice a2 with Baker:");
 			System.out.println(statMC.variance()/statQMCa2Baker.variance()/((int)Math.pow(2, n)));
 		}
+		
 		*/
 		
-		
+		/*
 		for (int j = 3; j<4; j++){
 			System.out.println("Method " + j);
 				
 			Tally statMC = AsianQMC.MonteCarloDerivative((int)Math.pow(2, n), j, stream);
-				
+			System.out.println("Basic Monte-Carlo, for derivative:");
+			System.out.println(statMC.report());
+			
 			// Lattice a1 without Baker - derivative
 			Tally statQMCa1 = AsianQMC.questionBDerivative(32, n, j, a1);
-			System.out.println("Variance reduction, lattice a1 without Baker, for derivative:");
-			System.out.println(statMC.variance()/statQMCa1.variance()/((int)Math.pow(2, n)));
+			System.out.println("Lattice a1 without Baker, for derivative:");
+			System.out.println(statQMCa1.report());
 				
 			// Lattice a1 with Baker - derivative
 			Tally statQMCa1Baker = AsianQMC.questionBakerBDerivative(32, n, j, a1);
-			System.out.println("Variance reduction, lattice a1 with Baker, for derivative:");
-			System.out.println(statMC.variance()/statQMCa1Baker.variance()/((int)Math.pow(2, n)));
+			System.out.println("Lattice a1 with Baker, for derivative:");
+			System.out.println(statQMCa1Baker.report());
 			
 			// Lattice a2 without Baker - derivative
 			Tally statQMCa2 = AsianQMC.questionBDerivative(32, n, j, a2);
-			System.out.println("Variance reduction, lattice a2 without Baker, for derivative:");
-			System.out.println(statMC.variance()/statQMCa2.variance()/((int)Math.pow(2, n)));
+			System.out.println("Lattice a2 without Baker, for derivative:");
+			System.out.println(statQMCa2.report());
 				
 			// Lattice a2 with Baker - derivative
 			Tally statQMCa2Baker = AsianQMC.questionBakerBDerivative(32, n, j, a2);
-			System.out.println("Variance reduction, lattice a2 with Baker, for derivative:");
-			System.out.println(statMC.variance()/statQMCa2Baker.variance()/((int)Math.pow(2, n)));
+			System.out.println("Lattice a2 with Baker, for derivative:");
+			System.out.println(statQMCa2Baker.report());
 		}
+		*/
+		
+		
+		
+		// Question e)
+		QMC AsianToFindRoot140 = new QMC(mu, sigma, theta, v, omega, 140, s0, 1, 0, r, 1);
+		QMC AsianToFindRoot180 = new QMC(mu, sigma, theta, v, omega, 180, s0, 1, 0, r, 1);
+		
+		
+		
+		System.out.println("Root for K=140: " + AsianToFindRoot140.Root());
+		System.out.println("Root for K=180: " + AsianToFindRoot180.Root());
+		
+		Tally noIS140 = AsianToFindRoot140.MonteCarlo((int)Math.pow(2, 14), 3, stream);
+		Tally IS140 = AsianToFindRoot140.MonteCarloIS((int)Math.pow(2, 14), stream, AsianToFindRoot140.Root());
+		System.out.println("Strike = " + 140);
+		System.out.println(noIS140.report());
+		System.out.println(IS140.report());
+		
+		Tally noIS180 = AsianToFindRoot180.MonteCarlo((int)Math.pow(2, 14), 3, stream);
+		Tally IS180 = AsianToFindRoot180.MonteCarloIS((int)Math.pow(2, 14), stream, AsianToFindRoot180.Root());
+		System.out.println("Strike = " + 180);
+		System.out.println(noIS180.report());
+		System.out.println(IS180.report());
+		
+		
+		
+		// Question g)
+		double omega140=AsianToFindRoot140.Root()*1.01;
+		double omega180=AsianToFindRoot180.Root()*1.01;
+		
+		System.out.println("Using omega for K=140: " + omega140);
+		System.out.println("Using omega for K=180: " + omega180);
+				
+				
+		Tally trunc140 = AsianToFindRoot140.MonteCarloTruncated((int)Math.pow(2, 14), stream, omega140);
+		System.out.println("Strike = " + 140);
+		System.out.println(trunc140.report());
+				
+		Tally trunc180 = AsianToFindRoot180.MonteCarloTruncated((int)Math.pow(2, 14), stream, omega180);
+		System.out.println("Strike = " + 180);
+		System.out.println(trunc180.report());
+		
+		
+		// Question h)
+		
+		n = 14;
+		// All gamma = 0.1
+		int[] lattice1 = {1, 6229};
+		
+		omega140=AsianToFindRoot140.Root();
+		omega180=AsianToFindRoot180.Root();
+		
+		System.out.println("Using omega for K=140: " + omega140);
+		System.out.println("Using omega for K=180: " + omega180);
+		
+		System.out.println("Strike = " + 140);
+		
+		// SOB + LMS + S
+		Tally statHsob140 = AsianToFindRoot140.SobLMSSTruncated(32, n, omega140);
+		System.out.println("SOB + LMS + S and conditional MC");
+		statHsob140.	setConfidenceIntervalStudent();
+		System.out.println(statHsob140.report());
+		System.out.println("Variance reduction:");
+		System.out.println(IS140.variance()/statHsob140.variance()/((int)Math.pow(2, n)));
+
+		
+		// Lattice without Baker
+		Tally statH140lattice1 = AsianToFindRoot140.questionBTruncated(32, n, lattice1, omega140);
+		System.out.println("Lattice 1 without Baker and conditional MC:");
+		statH140lattice1.	setConfidenceIntervalStudent();
+		System.out.println(statH140lattice1.report());
+		System.out.println("Variance reduction:");
+		System.out.println(IS140.variance()/statH140lattice1.variance()/((int)Math.pow(2, n)));
+						
+		// Lattice without Baker
+		Tally statH140lattice1Baker = AsianToFindRoot140.questionBakerBTruncated(32, n, lattice1, omega140);
+		System.out.println("Lattice 1 with Baker and conditional MC:");
+		statH140lattice1Baker.	setConfidenceIntervalStudent();
+		System.out.println(statH140lattice1Baker.report());
+		System.out.println("Variance reduction:");
+		System.out.println(IS140.variance()/statH140lattice1Baker.variance()/((int)Math.pow(2, n)));
+		
+		System.out.println("Strike = " + 180);
+		
+		// SOB + LMS + S
+		Tally statHsob180 = AsianToFindRoot180.SobLMSSTruncated(32, n, omega140);
+		System.out.println("SOB + LMS + S and conditional MC");
+		statHsob180.	setConfidenceIntervalStudent();
+		System.out.println(statHsob180.report());
+		System.out.println("Variance reduction:");
+		System.out.println(IS180.variance()/statHsob180.variance()/((int)Math.pow(2, n)));
+		
+		// Lattice without Baker
+		Tally statH180lattice1 = AsianToFindRoot180.questionBTruncated(32, n, lattice1, omega140);
+		System.out.println("Lattice 1 without Baker and conditional MC:");
+		statH180lattice1.	setConfidenceIntervalStudent();
+		System.out.println(statH180lattice1.report());
+		System.out.println("Variance reduction:");
+		System.out.println(IS180.variance()/statH180lattice1.variance()/((int)Math.pow(2, n)));
+						
+		// Lattice without Baker
+		Tally statH180lattice1Baker = AsianToFindRoot180.questionBakerBTruncated(32, n, lattice1, omega140);
+		System.out.println("Lattice 1 with Baker and conditional MC:");
+		statH180lattice1Baker.	setConfidenceIntervalStudent();
+		System.out.println(statH180lattice1Baker.report());
+		System.out.println("Variance reduction:");
+		System.out.println(IS180.variance()/statH180lattice1Baker.variance()/((int)Math.pow(2, n)));
+		  
+		
+		 
 	}
+	
+	
 }
